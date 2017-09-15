@@ -1,0 +1,31 @@
+<% include ./splices/head %>
+<% include ./splices/header %>
+
+<ul id="todo-items"></ul>
+
+<% include ./splices/footer %>
+
+<script>
+
+	$(document).ready(function() {
+
+		function todoItemsDOM(items) {
+			let todoItems = document.getElementById('todo-items');
+
+			for (var i = 0; i < items.length; i++) {
+				li = `<li id='${items[i].id}' class='item-${i}'><a href='/todo/${items[i].id}'>Name: ${items[i].text} | active: ${(items[i].active==1)}</a></li>`
+
+				$(todoItems).append(li)
+			}
+
+		}
+
+		$.ajax({
+			url: "http://localhost:1337/todos",
+			dataType: 'jsonp',
+			context: document.body
+		}).done((res) => { (res.status === 200)? todoItemsDOM(res.data) : console.log("ERROR: Refresh Page") });
+
+	})
+
+</script>

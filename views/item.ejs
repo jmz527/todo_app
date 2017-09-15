@@ -1,0 +1,39 @@
+<% include ./splices/head %>
+<% include ./splices/header %>
+
+<p id="item-title">Item <%= id %></p>
+
+<form id="delete-todo-form" action="http://localhost:1337/delete_todo/<%= id %>" method="post">
+	<input style="visibility:hidden;" type="text" name="list_ref" id="delete-todo-form-list-ref">
+
+	<div class="button">
+		<button id="todo-delete-button" type="submit">Delete</button>
+	</div>
+</form>
+
+<% include ./splices/footer %>
+
+<script>
+
+	$(document).ready(function() {
+
+		function itemDOM(item) {
+			let itemTitle = document.getElementById('item-title');
+			let inputRef = document.getElementById('delete-todo-form-list-ref')
+
+			$(itemTitle).html(`${item.text} | id: ${item.id} | list_ref: ${item.list_ref} `)
+			$(inputRef).val(item.list_ref)
+
+		}
+
+		$.ajax({
+			url: 'http://localhost:1337/todo/'+'<%= id %>',
+			dataType: 'jsonp',
+			context: document.body
+		}).done((res) => { (res.status === 200)? itemDOM(res.data) : console.log("ERROR: Refresh Page") });
+
+
+
+	})
+
+</script>
