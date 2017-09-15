@@ -15,26 +15,28 @@ var router = express.Router();
 	router.get('/root', (req, res) => { res.redirect('/') })
 	router.get('/main', (req, res) => { res.redirect('/') })
 
-	router.get('/forms', function(req, res) { // landing page
-		res.render('forms', { title: 'todo app - forms' })
-	})
-
-	router.get('/lists', function(req, res) { // landing page
+	router.get('/lists', function(req, res) {
 		res.render('lists', { title: 'todo app - lists' })
 	})
 
-	router.get('/todos', function(req, res) { // landing page
+	router.get('/todos', function(req, res) {
 		res.render('items', { title: 'todo app - todos' })
 	})
 
-	router.get('/list/:id', function(req, res) { // landing page
+	router.get('/list/:id', function(req, res) {
 		res.render('list', { title: 'todo app - list', id: req.params.id })
 	})
 
-	router.get('/todo/:id', function(req, res) { // landing page
+	router.get('/todo/:id', function(req, res) {
 		res.render('item', { title: 'todo app - todo', id: req.params.id })
 	})
 
+	router.get('/forms', function(req, res) {
+		res.render('forms', { title: 'todo app - forms' })
+	})
 
+	router.get('/form', function(req, res) {
+		res.render('form', { title: 'todo app - form', formType: 'list_form' })
+	})
 
 module.exports = router;
