@@ -40,7 +40,7 @@ class Main extends Component {
     return (
       <div className="Main">
         <div className="Main-header">
-          <h2>TODO</h2>
+          <h2>TODO APP</h2>
         </div>
 
         <Lists lists={this.state.lists} />
