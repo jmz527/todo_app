@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Main.css';
-import Lists from './Lists';
+import Lists from './todo/Lists';
 
 class Main extends Component {
   render() {
