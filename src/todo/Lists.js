@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
+import List from './List';
 import './Lists.css';
 
 class Lists extends Component {
   render() {
+  	let listItems = this.props.lists.map((list) => {
+  		return (<List key={list.id} name={list.name} todoCount={list.todo_count} listId={list.id} />);
+  	})
+
     return (
-      <div className="Lists">
-        <p className="Lists-intro">Lists stuff here</p>
-      </div>
+      <ul className="Lists">
+
+    		{listItems}
+
+      </ul>
     );
   }
 }

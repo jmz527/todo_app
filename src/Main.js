@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import './MeyersReset.css';
 import './Main.css';
 import Lists from './todo/Lists';
 
 class Main extends Component {
-  constructor(props, context) { console.log(`Main constructor`)
+  constructor(props, context) { // console.log(`Main constructor`)
     super(props, context)
 
     this.state = { lists: [] }
@@ -13,36 +14,36 @@ class Main extends Component {
     // initialize state here
   }
 
-  componentDidMount() { console.log(`Main componentDidMount`)
+  componentDidMount() { // console.log(`Main componentDidMount`)
     // invoked once (client-side only)
     // good for AJAX: fetch, ajax, or subscriptions
     // fires before first render()
 
-    // axios.get('http://localhost:1337/lists', {
-    //     responseType:'json',
-    //     headers: {
-    //       'Accept': 'application/json',
-    //       'Content-Type': 'application/json',
-    //     }
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
-
+    axios.get('http://localhost:1337/lists', {
+        responseType:'json',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      })
+      .then((res) => {
+        // console.log(res.data);
+        this.setState({ lists: res.data })
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
   }
 
-  render() { console.log(`Main render`)
+  render() { // console.log(`Main render`)
     return (
       <div className="Main">
         <div className="Main-header">
           <h2>TODO</h2>
         </div>
 
-        <Lists />
+        <Lists lists={this.state.lists} />
 
       </div>
     );
