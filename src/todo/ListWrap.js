@@ -1,24 +1,28 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import List from './List';
-import './Lists.css';
 
-class Lists extends Component {
-  constructor(props, context) { // console.log(`Main constructor`)
+class ListWrap extends Component {
+  constructor(props, context) { // console.log(`constructor`)
     super(props, context)
 
-    this.state = { lists: [] }
+    this.state = {
+      id: props.match.params.id,
+      name: "list name",
+      todoCount: 0
+    }
+
 
     // called before the component is mounted
     // initialize state here
   }
 
-  componentDidMount() { // console.log(`Main componentDidMount`)
+  componentDidMount() { // console.log(`componentDidMount`)
     // invoked once (client-side only)
     // good for AJAX: fetch, ajax, or subscriptions
     // fires before first render()
 
-    axios.get('http://localhost:1337/lists', {
+    axios.get(`http://localhost:1337/list/${this.props.match.params.id}`, {
         responseType:'json',
         headers: {
           'Accept': 'application/json',
@@ -27,7 +31,11 @@ class Lists extends Component {
       })
       .then((res) => {
         // console.log(res.data);
-        this.setState({ lists: res.data })
+        this.setState({
+          id: res.data.id,
+          name: res.data.name,
+          todoCount: res.data.todo_count
+        })
       })
       .catch((err) => {
         console.log(err);
@@ -36,18 +44,10 @@ class Lists extends Component {
   }
 
   render() {
-  	let listItems = this.state.lists.map((list) => {
-  		return (<List key={list.id} name={list.name} todoCount={list.todo_count} listId={list.id} />);
-  	})
-
     return (
-      <ul className="Lists">
-
-    		{listItems}
-
-      </ul>
+      <List key={this.state.id} name={this.state.name} todoCount={this.state.todoCount} listId={this.state.id} />
     );
   }
 }
 
-export default Lists;
+export default ListWrap;
