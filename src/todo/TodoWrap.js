@@ -45,7 +45,7 @@ class TodoWrap extends Component {
 
   render() {
     return (
-      <Todo key={this.state.id} text={this.state.text} ref={this.state.list_ref} todoId={this.state.id} />
+      <Todo key={this.state.id} linked={false} text={this.state.text} ref={this.state.list_ref} todoId={this.state.id} />
     );
   }
 }

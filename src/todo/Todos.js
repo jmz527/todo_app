@@ -37,7 +37,7 @@ class Todos extends Component {
 
   render() {
     let todoList = this.state.todos.map((todo) => {
-      return (<Todo key={todo.id} text={todo.text} ref={todo.list_ref} todoId={todo.id} />)
+      return (<Todo key={todo.id} linked={true} text={todo.text} ref={todo.list_ref} todoId={todo.id} />)
     })
 
     return (

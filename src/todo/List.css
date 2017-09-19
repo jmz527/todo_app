@@ -1,8 +1,14 @@
 .List {
   text-align: left;
+  padding: 0 15px;
+  margin: 15px 0;
 }
 
 h2 {
 	padding: 0;
 	margin: 0;
+}
+
+li {
+	list-style: none;
 }

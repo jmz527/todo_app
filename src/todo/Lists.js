@@ -37,7 +37,7 @@ class Lists extends Component {
 
   render() {
   	let listItems = this.state.lists.map((list) => {
-  		return (<List key={list.id} name={list.name} todoCount={list.todo_count} listId={list.id} />);
+  		return (<List key={list.id} linked={true} name={list.name} todoCount={list.todo_count} listId={list.id} />);
   	})
 
     return (

@@ -4,9 +4,17 @@ import './Todo.css';
 
 class Todo extends Component {
   render() {
+  	var title
+
+    if (this.props.linked) {
+      title = (<Link to={`/todo/${this.props.todoId}`}>{this.props.text}</Link>)
+    } else {
+      title = (<span>{this.props.text}</span>)
+    }
+
     return (
       <li className="Todo">
-      	<Link to={`/todo/${this.props.todoId}`}>{this.props.text}</Link>
+      	{title}
       </li>
     );
   }

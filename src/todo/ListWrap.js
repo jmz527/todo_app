@@ -45,7 +45,7 @@ class ListWrap extends Component {
 
   render() {
     return (
-      <List key={this.state.id} name={this.state.name} todoCount={this.state.todoCount} listId={this.state.id} />
+      <List key={this.state.id} linked={false} name={this.state.name} todoCount={this.state.todoCount} listId={this.state.id} />
     );
   }
 }
