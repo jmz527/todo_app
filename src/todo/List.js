@@ -4,7 +4,6 @@ import Todos from './Todos';
 import './List.css';
 
 class List extends Component {
-
   render() {
 
     var title;
@@ -19,6 +18,8 @@ class List extends Component {
       <li className="List">
 
         {title}
+
+        <button onClick={(e) => this.props.handleDelete(e, this.props.listId, this.props.index)}>delete</button>
 
         <Todos listId={this.props.listId} />
 

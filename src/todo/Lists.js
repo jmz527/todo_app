@@ -7,10 +7,18 @@ class Lists extends Component {
   constructor(props, context) { // console.log(`Main constructor`)
     super(props, context)
 
-    this.state = { lists: [] }
-
     // called before the component is mounted
     // initialize state here
+
+    this.state = {
+      lists: [],
+      newListName: "",
+      newListMode: false
+    }
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() { // console.log(`Main componentDidMount`)
@@ -35,19 +43,96 @@ class Lists extends Component {
 
   }
 
+  handleChange(e) {
+    this.setState({newListName: e.target.value});
+  }
+
+  handleSubmit(e) {
+    // console.log('A name was submitted: ' + this.state.newListName);
+
+    axios.post('http://localhost:1337/list', {
+        responseType:'json',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        text: this.state.newListName
+      })
+      .then((res) => {
+
+        let newList = {
+          id: res.data.id,
+          name: res.data.name,
+          todo_count: res.data.todo_count
+        }
+
+        this.setState({
+          lists: [...this.state.lists, newList],
+          newListName: "",
+          newListMode: false
+        });
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    e.preventDefault();
+  }
+
+  handleDelete(e, listId, idx) {
+    // console.log('A list was deleted: ' + listId);
+    // console.log(idx);
+
+    axios.post(`http://localhost:1337/delete_list/${listId}`, {
+        responseType:'json',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        }
+      })
+      .then((res) => {
+
+        this.setState({ lists: [].concat(this.state.lists.slice(0, idx), this.state.lists.slice(idx + 1)) });
+
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    e.preventDefault();
+  }
+
   render() {
-  	let listItems = this.state.lists.map((list) => {
-  		return (<List key={list.id} linked={true} name={list.name} todoCount={list.todo_count} listId={list.id} />);
-  	})
+    var listItems, newListComp;
+        listItems = this.state.lists.map((list, idx) => {
+          return (<List key={list.id} index={idx} linked={true} name={list.name} todoCount={list.todo_count} listId={list.id} handleDelete={this.handleDelete} />);
+        })
+
+    if (!this.state.newListMode) {
+      newListComp = (<button onClick={() => this.setState({ newListMode: true })}>+</button>);
+    } else {
+      newListComp = (
+        <form onSubmit={this.handleSubmit}>
+          <input type="text" value={this.state.newListName} onChange={this.handleChange} />
+          <input type="submit" value="Submit" />
+        </form>
+      );
+    }
 
     return (
       <ul className="Lists">
 
     		{listItems}
 
+        {newListComp}
+
       </ul>
     );
   }
 }
+
+
+
 
 export default Lists;
